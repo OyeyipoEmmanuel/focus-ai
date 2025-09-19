@@ -1,8 +1,14 @@
+import { Route, Routes } from "react-router-dom"
+import routes from "./routes/route"
+
 function App() {
+  
   return (
-    <>
-      FocusAI to the world!🎯
-    </>
+    <Routes>
+      {routes.map(({path, element}, index)=>(
+        <Route key={index} path={path} element={element}/>
+      ))}
+    </Routes>
   )
 }
 
