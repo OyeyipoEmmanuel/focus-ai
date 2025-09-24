@@ -9,7 +9,7 @@ const InputUi = (props: any) => {
                 <input
                     type={props.inputType}
                     name={props.name}
-                    value={props.value}
+                    value={props.value ?? ""}
                     onChange={props.onChange}
                     onBlur={props.onBlur}
                     className='outline-none w-full placeholder:text-sm placeholder:text-gray-600'
