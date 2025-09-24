@@ -76,7 +76,6 @@ const Login = () => {
     }
   }
 
-  console.log(errors)
   return (
     <main className="">
       {context}

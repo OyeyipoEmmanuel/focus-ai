@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 
 export const useGetUsername = () => {
     const [username, setUsername] = useState<string>("")
+
+    !navigator.onLine && console.log("Oops, seems you are offline")
     
 
     useEffect(() => {
