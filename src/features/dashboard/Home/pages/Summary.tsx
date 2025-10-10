@@ -55,9 +55,9 @@ const Summary = () => {
 
         <section className='grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4'>
             {summaryData.map((eachData) => (
-                
-                <CardUi key={eachData.id}>
-                    <div className='flex flex-col justify-between min-h-40'>
+                <div key={eachData.id}>
+                <CardUi className="hover:shadow-xl hover:scale-100 hover:transition-all hover:duration-200 hover:ease-in-out">
+                    <div className='flex flex-col justify-between min-h-40' >
 
                         <div className='flex items-center justify-between'>
                             <h1 className='text-gray-800 text-lg w-[70%]'>{eachData.header}</h1>
@@ -72,6 +72,7 @@ const Summary = () => {
                         </div>
                     </div>
                 </CardUi>
+                </div>
             ))}
         </section>
 

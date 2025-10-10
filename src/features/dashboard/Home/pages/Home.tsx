@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <main>
       <section className="bg-primaryblue-300 p-4 rounded-2xl flex flex-col space-y-5">
-        <h1 className="text-2xl text-white font-semibold">Good {periodOfDay ?? "Day"}, {username}</h1>
+        <h1 className="text-2xl text-white font-semibold">Good {periodOfDay ?? "Day"}, {username ?? "User"}</h1>
         {/* The future belongs to those who believe in the beauty of their dreams - Eleanor Roosevelt */}
 
         <AnimatePresence mode="wait">

@@ -11,3 +11,11 @@ body{
 @theme{
   --color-primaryblue-300: #255BFB;
 }
+
+a.active{
+  background-color: var(--color-primaryblue-300);
+  border-radius: 15px;
+  color: white ;
+  padding: .5rem 1rem;
+  transition: all 0.2s ease-in-out;
+}

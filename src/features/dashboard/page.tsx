@@ -10,7 +10,7 @@ const Page = () => {
     <main className='relative'>
       <TopNav onMenuClick={() => setOpen(true)} />
       <div className='hidden lg:block'>
-        <SideNav />
+        <SideNav/>
       </div>
       {open && <SideNav closeNav={() => setOpen(false)} />}
       <div className='absolute w-full top-20 px-3 lg:max-w-[82%] lg:right-0 lg:px-4'>
