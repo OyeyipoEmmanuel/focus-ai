@@ -10,13 +10,14 @@ import { useLocation } from "react-router-dom";
 const TopNav = ({ onMenuClick }: { onMenuClick: () => void }) => {
     const location = useLocation()
     const path = location.pathname.slice(1,).toUpperCase()
+    console.log(location.pathname)
 
     return (
         <div className="fixed w-full z-20">
         <nav className='border-b border-gray-300 w-full lg:max-w-[82%] lg:right-0 absolute flex justify-between items-center px-4 py-3 bg-white/30 backdrop-blur-md shadow-sm'>
             <div>
                 {/* COntent for lg screen */}
-                <h1 className="hidden lg:block font-semibold text-2xl text-primaryblue-300">{(path === '' ? "DASHBOARD" : path) ?? "Home"}</h1>
+                <h1 className="hidden lg:block font-semibold text-2xl text-primaryblue-300">{(location.pathname == '/' ? "DASHBOARD" : path) ?? "Home"}</h1>
                 <RxHamburgerMenu className="text-xl lg:hidden cursor-pointer" onClick={onMenuClick}/>
 
             </div>

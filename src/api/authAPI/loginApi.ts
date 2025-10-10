@@ -7,4 +7,5 @@ export const loginApi = async (email:string, password:string)=>{
 
 export const logOutApi = async()=>{
     await signOut(auth)
+    console.log("logged out")
 }

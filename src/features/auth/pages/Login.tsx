@@ -66,7 +66,7 @@ const Login = () => {
       })
 
       await delay(1000)
-      navigate('/home')
+      navigate('/')
     } catch (error) {
       message.error({
         message: "Something went wrong, Please try again"

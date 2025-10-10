@@ -42,7 +42,8 @@ const FeaturesSection = () => {
             <h1 className='font-semibold text-2xl mt-12 mb-4'>AI Assistant</h1>
             <section className='grid grid-cols-1 gap-4 md:gap-8 md:grid-cols-3'>
                 {featuresData.map((eachFeature) => (
-                    <CardUi className="hover:shadow-xl hover:scale-100 hover:transition-all hover:duration-200 hover:ease-in-out" key={eachFeature.id}>
+                    <div key={eachFeature.id}>
+                    <CardUi className="hover:shadow-xl hover:scale-100 hover:transition-all hover:duration-200 hover:ease-in-out">
                         <div className='flex items-center space-x-4'>
                             <span className={`${eachFeature.iconBgColor} p-3 text-xl text-white rounded-full`}>
                                 {eachFeature.icon}
@@ -53,6 +54,7 @@ const FeaturesSection = () => {
                             </span>
                         </div>
                     </CardUi>
+                    </div>
                 ))}
             </section>
         </main>
