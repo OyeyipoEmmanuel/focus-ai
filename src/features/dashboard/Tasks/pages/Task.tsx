@@ -1,6 +1,6 @@
 import { CiFilter } from "react-icons/ci";
 import TaskTab from "../component/TaskTab";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { auth, db } from "../../../../backend/firebase-config/config";
 import ModalComponent from "../../../../components/modal/ModalComponent";
 import { useState } from "react";
@@ -10,17 +10,20 @@ import AddTask from "./AddTask";
 const Task = () => {
   const [openAddTaskModal, setOpenAddTaskModel] = useState<boolean>(false)
 
-  // const getData = async () => {
-  //   const query = await getDocs(collection(db, "users"))
+  const getData = async () => {
+    if (!auth.currentUser?.uid) throw new Error("ERR")
+    
+    const query = await getDoc(doc(db, "users",auth.currentUser?.uid))
+console.log(query);
 
   //   query.forEach((doc) => {
   //     console.log(doc.id, "=>", doc.data())
   //   })
   // }
+  }
+  getData()
 
-  // getData()
-
-  // console.log(auth.currentUser)
+  console.log(auth.currentUser?.uid)
 
   // Function to add task
 

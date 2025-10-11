@@ -2,7 +2,7 @@
 
 const InputUi = (props: any) => {
     return (
-        <div className='flex flex-col space-y-2'>
+        <div className={`flex flex-col space-y-2 ${props.className}`}>
             <label htmlFor={props.htmlFor} className=''>{props.labelName}</label>
             <div className='flex items-center space-x-5 bg-[#F8FAFC] px-3 py-3 rounded-xl'>
                 <span className='text-xl text-gray-500'>{props.icon}</span>
