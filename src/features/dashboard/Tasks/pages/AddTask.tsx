@@ -11,6 +11,7 @@ import InputUi from '../../../auth/components/InputUi';
 import useNotification from 'antd/es/notification/useNotification';
 import { addTaskToDb } from '../../../../api/dashboardAPI/TaskApi/addTaskToDb';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 
 // const dummyDataSchema = [
 //     {
@@ -65,8 +66,8 @@ const optionsForPriority = [
 const optionsForTaskType = [
     { value: 'work', label: 'Work' },
     { value: 'personal', label: 'Personal' },
-    { value: 'learn', label: 'Learn' },
-    { value: 'other', label: 'Others' },
+    { value: 'learning', label: 'Learn' },
+    { value: 'others', label: 'Others' },
 ]
 
 const AddTask = (props: any) => {
@@ -74,32 +75,42 @@ const AddTask = (props: any) => {
 
     const [message, contextHolder] = useNotification()
 
-    const { handleSubmit, control, formState: { errors }, watch } = useForm<addTaskValidationSchemaType>({
+    const taskTabState = useSelector((state:any) => state.taskTabState.tab)
+
+    const { handleSubmit, control, formState: { errors }, watch, reset } = useForm<addTaskValidationSchemaType>({
         resolver: zodResolver(addTaskValidationSchema),
         defaultValues: {
             taskType: "personal",
-            priority: "medium",   
-            dueDate: dayjs().format("YYYY-MM-DD"), 
+            priority: "medium",
+            dueDate: dayjs().format("YYYY-MM-DD"),
             desc: "",
             taskName: "",
         }
     })
 
-    const watchDesc = watch("desc")
+    console.log(taskTabState)
+    const watchDesc = watch("desc")?.trim()
 
     const submitAddTask = async (data: addTaskValidationSchemaType) => {
         console.log({ ...data, completed: false })
         setLoading(true)
 
         try {
-            const res = await addTaskToDb({ ...data, completed: false })
+            const res = await addTaskToDb({ ...data, completed: false, dateAdded: dayjs().toString() })
 
             console.log(res)
 
             message.success({
                 message: "Added"
             })
-        } catch(e) {
+
+            //Close modal
+            props.closeModalAfterSubmit(false)
+
+            // reset form fields
+            reset()
+
+        } catch (e) {
             console.log(e)
             message.error({
                 message: "Error adding task. Please try again later!"

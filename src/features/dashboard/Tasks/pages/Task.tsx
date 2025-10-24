@@ -1,10 +1,12 @@
 import { CiFilter } from "react-icons/ci";
 import TaskTab from "../component/TaskTab";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../../../../backend/firebase-config/config";
 import ModalComponent from "../../../../components/modal/ModalComponent";
 import { useState } from "react";
 import AddTask from "./AddTask";
+import MapTask from "./MapTask";
+import CtaButtons from "../../../../components/buttons/CtaButtons";
 
 
 const Task = () => {
@@ -12,14 +14,33 @@ const Task = () => {
 
   const getData = async () => {
     if (!auth.currentUser?.uid) throw new Error("ERR")
-    
-    const query = await getDoc(doc(db, "users",auth.currentUser?.uid))
-console.log(query);
 
-  //   query.forEach((doc) => {
-  //     console.log(doc.id, "=>", doc.data())
-  //   })
-  // }
+    // const query = await getDoc(doc(db, "users", auth.currentUser?.uid))
+    // console.log(query);
+
+    // To get one data
+    // const unsub = onSnapshot(doc(db, "users", auth.currentUser.uid,  "tasks", "3t7wBUvRoRolKCtFpDye"), (doc)=>{
+    //   console.log(doc.data())
+    // })
+
+    // To get multiple doc
+    const unsubscribe = onSnapshot(collection(db, "users", auth.currentUser.uid, "tasks"), (snapshot) => {
+      const tasks: any = []
+
+      snapshot.forEach((doc) => {
+        tasks.push(doc.data())
+      })
+      console.log(tasks)
+    })
+
+    return unsubscribe
+
+    // return unsub
+
+    //   query.forEach((doc) => {
+    //     console.log(doc.id, "=>", doc.data())
+    //   })
+    // }
   }
   getData()
 
@@ -37,23 +58,25 @@ console.log(query);
           <p>Filter</p>
         </button>
 
-        <button className="bg-primaryblue-300 px-3 py-1 rounded-full flex flex-row space-x-1 text-white items-center hover:border-gray-400 hover:bg-gray-200 transition-all duration-200 hover:text-black cursor-pointer" onClick={() => setOpenAddTaskModel(true)}>
+        <CtaButtons onClick={() => setOpenAddTaskModel(true)}>
           <p className="text-xl text-gray-300">+</p>
           <p>Add Task</p>
-        </button>
+        </CtaButtons>
         {/* <ModalComponent /> */}
       </section>
 
       {/* MODAL TO ADD TASK */}
       <ModalComponent title="Add a Task" open={openAddTaskModal} onOk={() => setOpenAddTaskModel(false)} onCancel={() => setOpenAddTaskModel(false)}>
-        <AddTask afterSubmit={setOpenAddTaskModel}/>
+        <AddTask closeModalAfterSubmit={setOpenAddTaskModel} />
       </ModalComponent>
 
 
       <TaskTab />
 
       {/* LIST OF TASKS */}
-      <section></section>
+      <section className="mt-8">
+        <MapTask/>
+      </section>
     </main>
   )
 }
