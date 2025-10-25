@@ -1,10 +1,6 @@
 import React from 'react';
 import { Select, Space, type SelectProps } from 'antd';
 
-const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-};
-
 const SelectField: React.FC<SelectProps> = ({options, defaultValue, onChange, value}) => (
     <Space wrap>
         <Select

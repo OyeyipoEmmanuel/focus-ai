@@ -1,4 +1,4 @@
-import React, { type ReactElement } from 'react'
+import { type ReactElement } from 'react'
 import { IoBookOutline } from "react-icons/io5";
 import { CiChat1 } from "react-icons/ci";
 import { GrNotes } from "react-icons/gr";

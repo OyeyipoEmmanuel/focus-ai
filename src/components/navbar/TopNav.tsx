@@ -1,7 +1,6 @@
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FiMoon } from "react-icons/fi";
-import { IoSunnyOutline } from "react-icons/io5";
 import { RxPerson } from "react-icons/rx";
 import { useLocation } from "react-router-dom";
 

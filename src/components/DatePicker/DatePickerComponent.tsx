@@ -19,7 +19,7 @@ const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ value, onChan
     <Space direction="vertical" style={{ width: '100%' }}>
       <DatePicker
         value={value ? dayjs(value, dateFormat) : undefined}
-        onChange={(date, dateString) => typeof dateString === "string" && onChange?.(dateString)}
+        onChange={(dateString) => typeof dateString === "string" && onChange?.(dateString)}
         style={{ width: '100%' }}
         defaultValue={currentDay}
         format={dateFormat}
