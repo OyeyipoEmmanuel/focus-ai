@@ -7,7 +7,7 @@ const ModalComponent: React.FC<ModalProps> = ({children, title, open, onOk, onCa
     <>
       <Modal
         title={
-          <h1 className='text-xl text-primaryblue-300'>{title}</h1>
+          <h1 className='text-xl text-primaryblue-300'>{title || ""}</h1>
         }
         closable={{ 'aria-label': 'Custom Close Button' }}
         open={open}

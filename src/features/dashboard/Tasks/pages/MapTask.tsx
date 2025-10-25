@@ -8,8 +8,8 @@ import emptyTaskImg from "../../../../assets/noTaskIllustration-Photoroom.webp";
 import LoadingComponent from '../../../../components/loadingComponent/LoadingComponent'
 import { FaCheck } from "react-icons/fa6";
 import { updateTaskCompletion } from '../../../../api/dashboardAPI/TaskApi/postReqToDb'
-import { message } from 'antd'
 import { useSelector } from 'react-redux'
+import PopoverComponent from '../component/Popover/PopoverComponent'
 
 
 const MapTask = () => {
@@ -138,8 +138,8 @@ const MapTask = () => {
             <section className='flex justify-between space-x-4 items-start'>
               <div className='max-w-[10%]'>
                 {/* <input type='checkbox' checked={task.completed} /> */}
-                <div className={`flex items-center justify-center w-4 h-4 mt-1 rounded-full border-[0.5px] bg-white border-gray-400 ${task.completed && "border-green-600 border-2"}`} onClick={() => handleTaskCompleted(task.id || "", task.completed || false)}>
-                  {task.completed && <FaCheck className='text-[10px] mx-auto text-green-600 font-light' />}
+                <div className={`flex items-center justify-center w-4 h-4 mt-1 rounded-full border-[0.5px] bg-white cursor-pointer border-gray-400 ${task.completed && "border-green-600 border-2"}`} onClick={() => handleTaskCompleted(task.id || "", task.completed || false)}>
+                  {task.completed && <FaCheck className='text-[14px] mx-auto text-green-600 font-extrabold absolute left-9 mb-1 font-e' />}
                 </div>
               </div>
               <div className='w-full space-y-3 flex flex-col'>
@@ -168,7 +168,7 @@ const MapTask = () => {
                   </aside>
                 </span>
               </div>
-              <div className='font-extrabold '>...</div>
+              <PopoverComponent taskId={task.id}/>
             </section>
           </CardUi>
 
