@@ -1,6 +1,6 @@
 import { CiFilter } from "react-icons/ci";
 import TaskTab from "../component/TaskTab";
-import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../../../../backend/firebase-config/config";
 import ModalComponent from "../../../../components/modal/ModalComponent";
 import { useState } from "react";

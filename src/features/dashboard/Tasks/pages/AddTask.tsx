@@ -100,7 +100,7 @@ const AddTask: React.FC<AddTaskProps> = ({ closeModalAfterSubmit, operationType,
     })
 
     // Get Task Contents to edit
-    const { data: prevTask, isLoading: loadPrevTask, error: prevTaskErr } = useQuery({
+    const { data: prevTask, isLoading: loadPrevTask, error:prevTaskError } = useQuery({
         queryKey: ["task", taskId],
         queryFn: () => getTaskById(taskId || ""),
         enabled: operationType === "edit" && !!taskId
@@ -173,6 +173,7 @@ const AddTask: React.FC<AddTaskProps> = ({ closeModalAfterSubmit, operationType,
     return (
         <form className='mt-4 flex flex-col space-y-3' onSubmit={handleSubmit(submitAddTask, (errors) => { console.log(errors) })}>
             {contextHolder}
+            {prevTaskError && <p>Error</p>}
             {loadPrevTask && <LoadingComponent />}
             {inputFields.map((each) => (
                 <div key={each.id}>

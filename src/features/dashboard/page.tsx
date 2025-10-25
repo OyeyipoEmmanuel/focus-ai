@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import TopNav from '../../components/navbar/TopNav'
 import SideNav from '../../components/navbar/SideNav'
-import Home from './Home/pages/Home'
 import { Outlet } from 'react-router-dom'
 
 const Page = () => {

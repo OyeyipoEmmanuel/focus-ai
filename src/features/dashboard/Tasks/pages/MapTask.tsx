@@ -127,6 +127,7 @@ const MapTask = () => {
   return (
     <main className='mb-8'>
       {loading && (<LoadingComponent />)}
+      {error && <p>Error</p>}
       <section className='flex flex-col space-y-4'>
         {!loading && tasks.length === 0 && (
           <span>

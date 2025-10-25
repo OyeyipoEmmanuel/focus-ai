@@ -3,7 +3,6 @@ import { useGetPeriodOfDay } from "../../../../hooks/useGetPeriodOfDay"
 import { useGetUsername } from "../../../../hooks/useGetUsername"
 import { motion, AnimatePresence } from "framer-motion"
 import Summary from "./Summary"
-import { useEffect } from "react"
 import FeaturesSection from "./FeaturesSection"
 
 const Home = () => {
