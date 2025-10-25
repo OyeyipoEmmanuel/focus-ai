@@ -67,7 +67,7 @@ const Task = () => {
 
       {/* MODAL TO ADD TASK */}
       <ModalComponent title="Add a Task" open={openAddTaskModal} onOk={() => setOpenAddTaskModel(false)} onCancel={() => setOpenAddTaskModel(false)}>
-        <AddTask closeModalAfterSubmit={setOpenAddTaskModel} />
+        <AddTask closeModalAfterSubmit={setOpenAddTaskModel} operationType="add"/>
       </ModalComponent>
 
 

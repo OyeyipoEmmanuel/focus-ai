@@ -1,4 +1,4 @@
-import React, { useState, type ReactElement } from 'react'
+import React, { useEffect, useState, type ReactElement } from 'react'
 import { addTaskValidationSchema, type addTaskValidationSchemaType } from '../../../../schemas/addTaskValidationSchema';
 import { MdOutlineEmail } from 'react-icons/md';
 
@@ -12,6 +12,10 @@ import useNotification from 'antd/es/notification/useNotification';
 import { addTaskToDb } from '../../../../api/dashboardAPI/TaskApi/addTaskToDb';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
+import { getTaskById } from '../../../../api/dashboardAPI/TaskApi/getTasks';
+import { useQuery } from '@tanstack/react-query';
+import LoadingComponent from '../../../../components/loadingComponent/LoadingComponent';
+import { editTask } from '../../../../api/dashboardAPI/TaskApi/actionsForTasksDb';
 
 // const dummyDataSchema = [
 //     {
@@ -69,13 +73,20 @@ const optionsForTaskType = [
     { value: 'learning', label: 'Learn' },
     { value: 'others', label: 'Others' },
 ]
+type AddTaskProps = {
+    closeModalAfterSubmit: (check: boolean) => void
+    operationType?: string
+    taskId?: string
+}
 
-const AddTask = (props: any) => {
+
+const AddTask: React.FC<AddTaskProps> = ({ closeModalAfterSubmit, operationType, taskId }) => {
     const [loading, setLoading] = useState<boolean>(false)
 
     const [message, contextHolder] = useNotification()
 
-    const taskTabState = useSelector((state:any) => state.taskTabState.tab)
+    const taskTabState = useSelector((state: any) => state.taskTabState.tab)
+
 
     const { handleSubmit, control, formState: { errors }, watch, reset } = useForm<addTaskValidationSchemaType>({
         resolver: zodResolver(addTaskValidationSchema),
@@ -88,6 +99,25 @@ const AddTask = (props: any) => {
         }
     })
 
+    // Get Task Contents to edit
+    const { data: prevTask, isLoading: loadPrevTask, error: prevTaskErr } = useQuery({
+        queryKey: ["task", taskId],
+        queryFn: () => getTaskById(taskId || ""),
+        enabled: operationType === "edit" && !!taskId
+    })
+
+    useEffect(() => {
+
+        if (typeof prevTask === "string") {
+            message.error({
+                message: prevTask
+            })
+            return;
+        } else {
+            reset(prevTask)
+        }
+    }, [prevTask, reset,])
+
     console.log(taskTabState)
     const watchDesc = watch("desc")?.trim()
 
@@ -96,19 +126,38 @@ const AddTask = (props: any) => {
         setLoading(true)
 
         try {
-            const res = await addTaskToDb({ ...data, completed: false, dateAdded: dayjs().toString() })
+            if (operationType === "edit") {
+                await editTask(taskId || "", data)
 
-            console.log(res)
+                message.success({
+                    message: "Edited"
+                })
 
-            message.success({
-                message: "Added"
-            })
+                //Close modal
+                closeModalAfterSubmit(false)
 
-            //Close modal
-            props.closeModalAfterSubmit(false)
+                // reset form fields
+                reset()
 
-            // reset form fields
-            reset()
+                return;
+            }
+
+            if (operationType === "add") {
+                const res = await addTaskToDb({ ...data, completed: false, dateAdded: dayjs().toString() })
+
+                console.log(res)
+
+                message.success({
+                    message: "Added"
+                })
+
+                //Close modal
+                closeModalAfterSubmit(false)
+
+                // reset form fields
+                reset()
+            }
+
 
         } catch (e) {
             console.log(e)
@@ -124,6 +173,7 @@ const AddTask = (props: any) => {
     return (
         <form className='mt-4 flex flex-col space-y-3' onSubmit={handleSubmit(submitAddTask, (errors) => { console.log(errors) })}>
             {contextHolder}
+            {loadPrevTask && <LoadingComponent />}
             {inputFields.map((each) => (
                 <div key={each.id}>
                     <Controller
@@ -206,8 +256,13 @@ const AddTask = (props: any) => {
 
 
             <div className='flex items-center space-x-3 justify-end mt-5'>
-                <button type="button" className='px-7 py-2 border rounded-md border-gray-300 shadow-lg hover:opacity-80 cursor-pointer hover:transition-all duration-200' onClick={() => props.afterSubmit(false)}>Cancel</button>
-                <button type='submit' className={`bg-primaryblue-300 text-white px-7 py-2 rounded-md shadow-lg hover:opacity-80 cursor-pointer hover:transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed`} disabled={loading}>{loading ? "Adding..." : "Add task"}</button>
+                <button type="button" className='px-7 py-2 border rounded-md border-gray-300 shadow-lg hover:opacity-80 cursor-pointer hover:transition-all duration-200' onClick={() => closeModalAfterSubmit(false)}>Cancel</button>
+
+                {/* Add btn */}
+                <button type='submit' className={`bg-primaryblue-300 text-white px-7 py-2 rounded-md shadow-lg hover:opacity-80 cursor-pointer hover:transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed ${operationType === "edit" && "hidden"}`} disabled={loading}>{loading ? "Adding..." : "Add task"}</button>
+
+                {/* Edit btn */}
+                <button type='submit' className={`bg-primaryblue-300 text-white px-7 py-2 rounded-md shadow-lg hover:opacity-80 cursor-pointer hover:transition-all duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed ${operationType === "add" && "hidden"}`} disabled={loading}>{loading ? "Editing..." : "Edit task"}</button>
             </div>
         </form>
     )

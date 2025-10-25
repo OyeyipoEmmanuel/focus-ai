@@ -1,4 +1,4 @@
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { collection, doc, getDoc, onSnapshot, orderBy, query } from "firebase/firestore";
 import { auth, db } from "../../../backend/firebase-config/config";
 import type { addTaskValidationSchemaType } from "../../../schemas/addTaskValidationSchema";
 import dayjs from "dayjs";
@@ -150,3 +150,18 @@ export const getCompletedTasks = ({ onData, onError }: GetTasksParams) => {
 
   return unsubscribe;
 };
+
+// Get Tasks by id
+export const getTaskById = async (taskId:string)=>{
+  const userId = auth.currentUser?.uid;
+
+  if(!userId) return "Authentication Failed"
+
+  const q = doc(db, "users", userId, "tasks", taskId)
+
+  const docRef = await getDoc(q)
+
+  if (!docRef.exists()) return "Invalid Task"
+
+  return docRef.data()
+}
