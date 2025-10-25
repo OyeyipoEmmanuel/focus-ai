@@ -1,5 +1,4 @@
 import React from 'react';
-import type { DatePickerProps } from 'antd';
 import { DatePicker, Space } from 'antd';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -8,21 +7,23 @@ dayjs.extend(customParseFormat);
 
 const dateFormat = 'YYYY-MM-DD';
 
-const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-  console.log(date, dateString);
+type DatePickerComponentProps = {
+  value?: string;
+  onChange?: (value: string) => void;
 };
 
-const DatePickerComponent: React.FC = () => {
+const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ value, onChange }) => {
   const currentDay = dayjs();
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
       <DatePicker
-        onChange={onChange}
+        value={value ? dayjs(value, dateFormat) : undefined}
+        onChange={(date, dateString) => typeof dateString === "string" && onChange?.(dateString)}
         style={{ width: '100%' }}
         defaultValue={currentDay}
-        minDate={currentDay}             
         format={dateFormat}
+        disabledDate={(current) => current && current < dayjs().startOf('day')} // ✅ no past dates
       />
     </Space>
   );

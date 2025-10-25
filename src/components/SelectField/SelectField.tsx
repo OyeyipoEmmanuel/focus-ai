@@ -5,12 +5,13 @@ const handleChange = (value: string) => {
     console.log(`selected ${value}`);
 };
 
-const SelectField: React.FC<SelectProps> = ({options, defaultValue}) => (
+const SelectField: React.FC<SelectProps> = ({options, defaultValue, onChange, value}) => (
     <Space wrap>
         <Select
             defaultValue={defaultValue}
             style={{ minWidth: 150 }}
-            onChange={handleChange}
+            onChange={onChange}
+            value={value === undefined ? defaultValue : value}
             options={options}
         />
     </Space>
