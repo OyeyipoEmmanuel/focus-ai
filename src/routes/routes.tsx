@@ -4,6 +4,7 @@ import Page from "../features/dashboard/page";
 import Home from "../features/dashboard/Home/pages/Home";
 import Task from "../features/dashboard/Tasks/pages/Task";
 import ProtectedRoute from "../components/protectedRoute/ProtectedRoute";
+import Schedule from "../features/dashboard/Schedule/page";
 
 
 export const routes = [
@@ -29,7 +30,11 @@ export const routes = [
           {
             path: "tasks",
             element: <Task />,
-          }
+          },
+          {
+            path: "schedule",
+            element: <Schedule />,
+          },
         ],
       }
     ],

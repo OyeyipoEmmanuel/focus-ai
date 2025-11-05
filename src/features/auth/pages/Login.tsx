@@ -6,7 +6,7 @@ import { IoLockClosedOutline } from "react-icons/io5";
 import SubmitBtn from "../components/SubmitBtn";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginFormSchema, type LoginFormSchemaType } from "../../../schemas/loginValidationSchema";
+import { loginFormSchema, type LoginFormSchemaType } from "../../../schemas/auth/loginValidationSchema";
 import { useState, type ReactElement } from "react";
 import { loginApi } from "../../../api/authAPI/loginApi";
 import useNotification from "antd/es/notification/useNotification";

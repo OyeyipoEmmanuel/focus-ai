@@ -5,7 +5,7 @@ import { FaRegUser } from "react-icons/fa6";
 import CardUi from "../components/CardUi"
 import SubmitBtn from "../components/SubmitBtn"
 import InputUi from "../components/InputUi"
-import { signupValidationSchema, type signupValidationType } from "../../../schemas/sugnupValidationSchema";
+import { signupValidationSchema, type signupValidationType } from "../../../schemas/auth/sugnupValidationSchema";
 import { useState, type ReactElement } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

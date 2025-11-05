@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from 'react'
 import { getAllTasks, getCompletedTasks, getTodayTasks, getUpcomingTasks } from '../../../../api/dashboardAPI/TaskApi/getTasks'
-import type { addTaskValidationSchemaType } from '../../../../schemas/addTaskValidationSchema'
+import type { addTaskValidationSchemaType } from '../../../../schemas/tasks/addTaskValidationSchema'
 import CardUi from '../../Home/component/CardUi'
 import { FaCalendar } from 'react-icons/fa6'
 import emptyTaskImg from "../../../../assets/noTaskIllustration-Photoroom.webp";
@@ -122,7 +121,7 @@ const MapTask = () => {
       console.log(error)
     }
   }
-
+  
 
   return (
     <main className='mb-8'>
