@@ -1,6 +1,6 @@
-import AuthLayout from "../components/AuthLayout"
-import CardUi from "../components/CardUi"
-import InputUi from "../components/InputUi"
+import AuthLayout from "../components/AuthLayout";
+import CardUi from "../components/CardUi";
+import InputUi from "../components/InputUi";
 import { MdOutlineEmail } from "react-icons/md";
 import { IoLockClosedOutline } from "react-icons/io5";
 import SubmitBtn from "../components/SubmitBtn";

@@ -7,5 +7,5 @@ export const addTaskToDb = async(data: addTaskValidationSchemaType)=>{
 
     if (!uid) throw new Error("No userID")
 
-   await addDoc(collection(db, "users", uid, "tasks"), data)
+   await addDoc(collection(db, "users", uid, "tasks"), {...data, taskName_lower: data.taskName.toLowerCase()})
 }

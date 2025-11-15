@@ -16,7 +16,7 @@ const PopoverComponent: React.FC<PopoverProps> = ({ taskId }) => {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false)
   const [popoverOpen, setPopoverOpen] = useState(false);
 
-  console.log(openEditModal)
+  
   const content = (
     <div className='border-t border-gray-200 pt-4 space-y-2'>
       {/* Edit btn */}

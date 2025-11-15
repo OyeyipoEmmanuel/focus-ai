@@ -9,7 +9,6 @@ import { useLocation } from "react-router-dom";
 const TopNav = ({ onMenuClick }: { onMenuClick: () => void }) => {
     const location = useLocation()
     const path = location.pathname.slice(1,).toUpperCase()
-    console.log(location.pathname)
 
     return (
         <div className="fixed w-full z-20">

@@ -10,13 +10,30 @@ import { updateTaskCompletion } from '../../../../api/dashboardAPI/TaskApi/postR
 import { useSelector } from 'react-redux'
 import PopoverComponent from '../component/Popover/PopoverComponent'
 
+type MapTaskProps = {
+  searchedTaskResult: {result: addTaskValidationSchemaType[] | [], isLoading: boolean, error: Error | null};
 
-const MapTask = () => {
+  searchedTask: string
+}
+
+const MapTask = ({searchedTaskResult, searchedTask} : MapTaskProps) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [tasks, setTasks] = useState<addTaskValidationSchemaType[]>([])
   const [error, setError] = useState<Error | null>(null)
 
   const tasktab = useSelector((state: any) => state.taskTabState.tab)
+
+  console.log(searchedTaskResult.result)
+  console.log(searchedTask);
+  
+
+  // useEffect(()=>{
+  //   if(searchedTask.trim().length <= 0){
+  //     return;
+  //   }
+
+  //   setTasks(searchedTaskResult.result)
+  // }, [searchedTaskResult.result])
 
   useEffect(() => {
 
@@ -121,19 +138,27 @@ const MapTask = () => {
       console.log(error)
     }
   }
+
+  // Task to display based on search or not
+const isSearching = searchedTask.trim().length > 0
+  const taskToDisplay = isSearching && !searchedTaskResult.isLoading ? searchedTaskResult.result : tasks
+
+  const loadingState = loading || (isSearching && searchedTaskResult.isLoading)
+
+  const emptyTaskState = !loadingState && taskToDisplay.length === 0
   
 
   return (
     <main className='mb-8'>
-      {loading && (<LoadingComponent />)}
+      {loadingState && (<LoadingComponent />)}
       {error && <p>Error</p>}
       <section className='flex flex-col space-y-4'>
-        {!loading && tasks.length === 0 && (
+        {emptyTaskState && (
           <span>
             <img src={emptyTaskImg} alt="task empty icon" className='w-full md:max-w-[70%] lg:max-w-[50%] mx-auto' />
           </span>
         )}
-        {!loading && tasks.length > 0 && tasks.map((task) => (
+        {!loading && taskToDisplay.length > 0 && taskToDisplay.map((task) => (
           <CardUi key={task.id}>
             <section className='flex justify-between space-x-4 items-start'>
               <div className='max-w-[10%]'>
