@@ -36,7 +36,8 @@ export const useSearchForTask = ({ searchItem, delay }: SearchForTaskParamType) 
 
             return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
         },
-        enabled: Boolean(debouncedSearch)
+        enabled: Boolean(debouncedSearch),
+        
     })
 
     useEffect(()=>{

@@ -13,7 +13,7 @@ import { useGetEmail } from "../../hooks/useGetUsername";
 import { logOutApi } from "../../api/authAPI/loginApi";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import CtaButtons from "../buttons/CtaButtons";
-import { MdDashboard } from "react-icons/md";
+// import { MdDashboard } from "react-icons/md";
 
 type NavLinks = {
     id: number;

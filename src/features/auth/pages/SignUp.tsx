@@ -12,6 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpApi } from "../../../api/authAPI/signUpAPI";
 import useNotification from "antd/es/notification/useNotification";
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { authWithGoogle } from "../../../api/authAPI/authWithGoogle";
 
 type InputFields = {
   id: number;
@@ -61,6 +63,8 @@ const inputFields: InputFields[] = [
 
 const SignUp = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [disableGoogleBtn, setDisableGoogleBtn] = useState<boolean>(false)
+
   const [message, context] = useNotification()
 
   const navigate = useNavigate()
@@ -74,9 +78,9 @@ const SignUp = () => {
     console.log(data)
 
     // Wait a few sec before signUp so loading can show
-    const delay = (time: number)=>{
-      return new Promise(resolve=> setTimeout(resolve, time))
-    } 
+    const delay = (time: number) => {
+      return new Promise(resolve => setTimeout(resolve, time))
+    }
 
     try {
       await delay(1000)
@@ -88,7 +92,7 @@ const SignUp = () => {
 
       await delay(1000)
       navigate('/login')
-      
+
     } catch (error) {
       console.log(error)
       message.error({
@@ -98,6 +102,20 @@ const SignUp = () => {
       setIsLoading(false)
     }
   }
+
+  const handleGoogleAuth = async () => {
+    setDisableGoogleBtn(true)
+    try {
+      const res = await authWithGoogle()
+      console.log(res)
+
+      setDisableGoogleBtn(false)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+
   return (
     <main>
       {context}
@@ -135,7 +153,14 @@ const SignUp = () => {
               <p className="text-sm">I agree to the <span className="text-blue-500 underline">privacy policy</span></p>
             </section>
 
-            <SubmitBtn btnName={isLoading ? "Creating..." : "Create Account"} loadingState={isLoading} />
+            <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-3">
+              <SubmitBtn btnName={isLoading ? "Creating..." : "Create Account"} loadingState={isLoading} />
+
+              <button type="button" className="bg-black/10 rounded-2xl p-[10px] text-3xl h-full text-center cursor-pointer hover:opacity-80 hover:transition-all hover:duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed" title="Authenticate with google" disabled={disableGoogleBtn} onClick={handleGoogleAuth}>
+                <FcGoogle className="mx-auto" />
+              </button>
+            </div>
+
 
           </form>
 

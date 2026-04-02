@@ -6,6 +6,7 @@ import Task from "../features/dashboard/Tasks/pages/Task";
 import ProtectedRoute from "../components/protectedRoute/ProtectedRoute";
 import Schedule from "../features/dashboard/Schedule/page";
 import Chat from "../features/dashboard/Chat/pages/Chat";
+import Study from "../features/dashboard/Study/pages/Study";
 
 
 export const routes = [
@@ -39,6 +40,10 @@ export const routes = [
           {
             path: "chat-ai",
             element: <Chat />,
+          },
+          {
+            path: "study",
+            element: <Study />,
           },
         ],
       }

@@ -1,4 +1,4 @@
-import { useState, type ReactElement } from "react"
+import { useState } from "react"
 import CtaButtons from "../../../components/buttons/CtaButtons"
 import CalenderSection from "./pages/CalenderSection"
 import UpcomingEvents from "./pages/UpcomingEvents"

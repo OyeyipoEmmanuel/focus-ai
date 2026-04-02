@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase/app";
+import { getApps, initializeApp } from "firebase/app";
 import {getFirestore} from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const processEnv = import.meta.env
 
@@ -14,6 +14,8 @@ const firebaseConfig = {
   measurementId: processEnv.VITE_MEASUREMENTID
 };
 
-const app = initializeApp(firebaseConfig);
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+
+export const provider = new GoogleAuthProvider()
 export const db = getFirestore(app)
 export const auth = getAuth(app)
