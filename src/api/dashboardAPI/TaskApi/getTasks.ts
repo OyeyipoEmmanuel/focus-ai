@@ -1,6 +1,6 @@
-import { collection, doc, getDoc, onSnapshot, orderBy, query } from "firebase/firestore";
+import { collection, doc, getCountFromServer, getDoc, onSnapshot, orderBy, query } from "firebase/firestore";
 import { auth, db } from "../../../backend/firebase-config/config";
-import type { addTaskValidationSchemaType } from "../../../schemas/addTaskValidationSchema";
+import type { addTaskValidationSchemaType } from "../../../schemas/tasks/addTaskValidationSchema";
 import dayjs from "dayjs";
 
 type GetTasksParams = {
@@ -35,6 +35,8 @@ export const getAllTasks = ({ onData, onError }: GetTasksParams) => {
           } as addTaskValidationSchemaType;
         }
       );
+
+      
 
       onData(tasks);
     },
@@ -165,3 +167,17 @@ export const getTaskById = async (taskId:string)=>{
 
   return docRef.data()
 }
+
+// Get total number of tasks
+export const totalTasks = async()=>{
+  const userId = auth.currentUser?.uid
+
+  if(!userId) return 0
+
+  const q = collection(db, "users", userId, "tasks")
+
+  const snapshot = await getCountFromServer(q)
+
+  return snapshot.data().count
+}
+

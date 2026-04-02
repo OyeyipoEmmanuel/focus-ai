@@ -26,6 +26,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.8.2",
     "tailwindcss": "^4.1.13",
+    "use-debounce": "^10.0.6",
     "zod": "^4.1.8"
   },
   "devDependencies": {

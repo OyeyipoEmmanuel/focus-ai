@@ -19,11 +19,11 @@ const DatePickerComponent: React.FC<DatePickerComponentProps> = ({ value, onChan
     <Space direction="vertical" style={{ width: '100%' }}>
       <DatePicker
         value={value ? dayjs(value, dateFormat) : undefined}
-        onChange={(dateString) => typeof dateString === "string" && onChange?.(dateString)}
+        onChange={(date) => onChange?.(date ? date.format(dateFormat) : "")}
         style={{ width: '100%' }}
         defaultValue={currentDay}
         format={dateFormat}
-        disabledDate={(current) => current && current < dayjs().startOf('day')} // ✅ no past dates
+        disabledDate={(current) => current && current < dayjs().startOf('day')}
       />
     </Space>
   );

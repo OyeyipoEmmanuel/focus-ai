@@ -1,6 +1,6 @@
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../backend/firebase-config/config";
-import type { addTaskValidationSchemaType } from "../../../schemas/addTaskValidationSchema";
+import type { addTaskValidationSchemaType } from "../../../schemas/tasks/addTaskValidationSchema";
 
 // Delete Task
 export const deleteTask = async (taskId: string) => {

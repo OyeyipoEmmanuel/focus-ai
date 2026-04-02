@@ -1,16 +1,19 @@
-import AuthLayout from "../components/AuthLayout"
-import CardUi from "../components/CardUi"
-import InputUi from "../components/InputUi"
+import AuthLayout from "../components/AuthLayout";
+import CardUi from "../components/CardUi";
+import InputUi from "../components/InputUi";
 import { MdOutlineEmail } from "react-icons/md";
 import { IoLockClosedOutline } from "react-icons/io5";
 import SubmitBtn from "../components/SubmitBtn";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginFormSchema, type LoginFormSchemaType } from "../../../schemas/loginValidationSchema";
+import { loginFormSchema, type LoginFormSchemaType } from "../../../schemas/auth/loginValidationSchema";
 import { useState, type ReactElement } from "react";
 import { loginApi } from "../../../api/authAPI/loginApi";
 import useNotification from "antd/es/notification/useNotification";
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { authWithGoogle } from "../../../api/authAPI/authWithGoogle";
+
 
 type InputFields = {
   id: number;
@@ -43,6 +46,7 @@ const inputFields: InputFields[] = [
 const Login = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [message, context] = useNotification()
+  const [disableGoogleBtn, setDisableGoogleBtn] = useState<boolean>(false)
 
   const navigate = useNavigate()
 
@@ -73,6 +77,18 @@ const Login = () => {
       })
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleGoogleAuth = async () => {
+    setDisableGoogleBtn(true)
+    try {
+      const res = await authWithGoogle()
+      console.log(res)
+
+      setDisableGoogleBtn(false)
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -110,8 +126,12 @@ const Login = () => {
                 </div>
               ))
             }
-
-            <SubmitBtn btnName={loading ? "Hang on a sec..." : "Login"} loadingState={loading} />
+            <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-3">
+              <SubmitBtn btnName={loading ? "Hang on a sec..." : "Login"} loadingState={loading} />
+              <button type="button" className="bg-black/10 rounded-2xl p-[10px] text-3xl h-full text-center cursor-pointer hover:opacity-80 hover:transition-all hover:duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed" title="Authenticate with google" disabled={disableGoogleBtn} onClick={handleGoogleAuth}>
+                <FcGoogle className="mx-auto" />
+              </button>
+            </div>
 
           </form>
 

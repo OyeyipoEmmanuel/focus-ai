@@ -1,9 +1,10 @@
-import { type ReactElement } from 'react'
+import { useEffect, useState, type ReactElement } from 'react'
 import CardUi from '../component/CardUi'
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { GrNotes } from "react-icons/gr";
 import { SlCalender } from "react-icons/sl";
 import { IoBulbOutline } from "react-icons/io5";
+import { totalTasks } from '../../../../api/dashboardAPI/TaskApi/getTasks';
 
 
 type SummaryData = {
@@ -15,13 +16,33 @@ type SummaryData = {
     smallText: string;
 }
 
-const summaryData: SummaryData[] = [
+
+
+const Summary = () => {
+    const [totalTaskLength, setTotalTaskLength] = useState<number>(0)
+    
+    useEffect(()=>{
+        const getLen = async()=>{
+            try {
+                const res = await totalTasks()
+                setTotalTaskLength(res)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        getLen()
+
+        // return ()=>getLen()
+    }, [])
+
+    const summaryData: SummaryData[] = [
     {
         id: 1,
-        header: "Today's Tasks",
+        header: "Tasks",
         icon: <IoMdCheckboxOutline />,
         iconBgColor: "bg-[#1553F1]",
-        value: 8,
+        value: totalTaskLength || 0,
         smallText: "3 completed"
     },
     {
@@ -50,7 +71,6 @@ const summaryData: SummaryData[] = [
     },
 ]
 
-const Summary = () => {
     return (
 
         <section className='grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4'>

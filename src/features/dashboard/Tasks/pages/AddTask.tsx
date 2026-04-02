@@ -1,6 +1,6 @@
 import React, { useEffect, useState, type ReactElement } from 'react'
-import { addTaskValidationSchema, type addTaskValidationSchemaType } from '../../../../schemas/addTaskValidationSchema';
-import { MdOutlineEmail } from 'react-icons/md';
+import { addTaskValidationSchema, type addTaskValidationSchemaType } from '../../../../schemas/tasks/addTaskValidationSchema';
+import { MdDescription, MdOutlineEmail } from 'react-icons/md';
 
 import SelectField from '../../../../components/SelectField/SelectField';
 import DatePickerComponent from '../../../../components/DatePicker/DatePickerComponent';
@@ -54,7 +54,7 @@ const inputFields: InputFieldType[] = [
     {
         id: 2,
         name: "desc",
-        icon: <MdOutlineEmail />,
+        icon: <MdDescription />,
         type: "text",
         placeholder: "Taking the order of the meeting.",
         labelName: "Description"
@@ -93,7 +93,7 @@ const AddTask: React.FC<AddTaskProps> = ({ closeModalAfterSubmit, operationType,
         defaultValues: {
             taskType: "personal",
             priority: "medium",
-            dueDate: dayjs().format("YYYY-MM-DD"),
+            dueDate: "",
             desc: "",
             taskName: "",
         }
@@ -106,6 +106,7 @@ const AddTask: React.FC<AddTaskProps> = ({ closeModalAfterSubmit, operationType,
         enabled: operationType === "edit" && !!taskId
     })
 
+    // FIll with prevData if operation === edit
     useEffect(() => {
 
         if (typeof prevTask === "string") {
