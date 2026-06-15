@@ -3,6 +3,7 @@ import { CiChat1 } from "react-icons/ci";
 import { IoMdCheckboxOutline } from "react-icons/io";
 import { SlCalender } from "react-icons/sl";
 import { IoAdd, IoBookOutline } from "react-icons/io5";
+import { LuNotebookPen } from "react-icons/lu";
 import { CiSettings } from "react-icons/ci";
 import { RxPerson } from "react-icons/rx";
 import { IoIosLogOut } from "react-icons/io";
@@ -56,6 +57,12 @@ const navLinks: NavLinks[] = [
     },
     {
         id: 6,
+        icon: <LuNotebookPen />,
+        linkTo: "/journal",
+        value: "Journal"
+    },
+    {
+        id: 7,
         icon: <CiSettings />,
         linkTo: "/settings",
         value: "Settings"
