@@ -7,6 +7,7 @@ import ProtectedRoute from "../components/protectedRoute/ProtectedRoute";
 import Schedule from "../features/dashboard/Schedule/page";
 import Chat from "../features/dashboard/Chat/pages/Chat";
 import Study from "../features/dashboard/Study/pages/Study";
+import Journal from "../features/dashboard/Journal/page";
 
 
 export const routes = [
@@ -44,6 +45,10 @@ export const routes = [
           {
             path: "study",
             element: <Study />,
+          },
+          {
+            path: "journal",
+            element: <Journal />,
           },
         ],
       }

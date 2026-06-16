@@ -9,19 +9,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { GoPeople } from "react-icons/go";
 
 
-// const colorBasedOnEventType = [
-//     { type: 'fun', color: '#FFB703' },
-//     { type: 'meeting', color: '#219EBC' },
-//     { type: 'family', color: '#8ECAE6' },
-//     { type: 'others', color: '#9B9B9B' }
-// ];
-
-const colorBasedOnEventType = new Map<string, string>([
-    ["fun", "#FFB703"],
-    ["meeting", "#219EBC"],
-    ["family", "#8ECAE6"],
-    ["others", "#9B9B9B"],
-])
+import { getEventTypeColor } from "../../../../constants/eventTypeColors";
 
 const MapEvents = () => {
     const [events, setEvents] = useState<addEventValidationSchemaType[]>([])
@@ -31,20 +19,18 @@ const MapEvents = () => {
     useEffect(() => {
         setLoading(true)
 
-        const subscribe = () => {
-            getAllEvents({
-                onData(events) {
-                    setEvents(events)
-                    setLoading(false)
-                },
-                onError(error) {
-                    setError(error)
-                    setLoading(false)
-                },
-            })
-        }
+        const unsubscribe = getAllEvents({
+            onData(events) {
+                setEvents(events)
+                setLoading(false)
+            },
+            onError(error) {
+                setError(error)
+                setLoading(false)
+            },
+        })
 
-        return () => subscribe()
+        return () => unsubscribe?.()
     }, [])
 
     console.log(events)
@@ -66,7 +52,7 @@ const MapEvents = () => {
                     <CardUi key={event.id}>
                         <main className="flex flex-row justify-between">
                             <div className="flex flex-row space-x-3 items-start">
-                                <section className={`w-3 h-3 rounded-full`} style={{ backgroundColor: colorBasedOnEventType.get(event.eventType || "fun") }}>
+                                <section className={`w-3 h-3 rounded-full`} style={{ backgroundColor: getEventTypeColor(event.eventType) }}>
                                 </section>
 
                                 <section className="flex flex-col space-y-3 w-full">
@@ -94,7 +80,7 @@ const MapEvents = () => {
 
                                         </span>
                                         <span className="w-fit flex flex-row space-x-1 items-center text-black/50">
-                                            <p className="px-4 rounded-full text-sm text-white font-semibold" style={{ backgroundColor: colorBasedOnEventType.get(event.eventType || "fun") }}>{event.eventType!.slice(0,1).toUpperCase() + event.eventType?.slice(1,)}</p>
+                                            <p className="px-4 rounded-full text-sm text-white font-semibold" style={{ backgroundColor: getEventTypeColor(event.eventType) }}>{event.eventType!.slice(0,1).toUpperCase() + event.eventType?.slice(1,)}</p>
                                         </span>
                                     </div>
                                 </section>
